@@ -5,14 +5,21 @@
 #include <iostream>
 using namespace std;
 
+
+struct Sala {
+    bool disponivel;
+    int capacidade;
+};
+
 class ReservationSystem {
 
 private:
     int room_count;
     int* room_capacities;
+    // buscaremos algo como [sala][dia][horario] = "nome_do_curso" 
 
-    // Estruturas internas escolhidas pelos alunos
-    // para armazenar e gerenciar as reservas, os horários, ...
+    string*** schedule;
+
 
 public:
 
