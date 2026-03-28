@@ -8,7 +8,10 @@ using namespace std;
 
 ReservationSystem::ReservationSystem(int room_count, int* room_capacities){
     this->room_count = room_count;
-    this->room_capacities = room_capacities;
+    this->room_capacities = new int[room_count]; // evitar o caso em que o array original sai de escopo
+    for (int i = 0; i < room_count; i++) {
+        this->room_capacities[i] = room_capacities[i];
+    }
 
     // buscaremos algo como [sala][dia][horario] = "nome_do_curso" 
     // acredito que esse armazenamento é melhor do que os outros q pensei sem stl
@@ -64,7 +67,7 @@ bool ReservationSystem::reserve(ReservationRequest request){
 
     int sala = -1;
     for (int idx = 0; idx < this->room_count; idx++){
-        if (request.getStudentCount() < this->room_capacities[idx]){
+        if (request.getStudentCount() <= this->room_capacities[idx]){
             bool valido = true;
             for (int hr = start; hr < end; hr++) { 
                 // validando requests que incluem mais de um bloco de horário. ex: 7-9 ou 9-12
@@ -109,13 +112,23 @@ bool ReservationSystem::cancel(string course_name){
 
 void ReservationSystem::printSchedule(){
 
-    for (int i = 0; i< this->room_count; i++){
-    cout << "Sala: " << i <<  endl;
+    for (int i = 0; i< this->room_count; i++) {
+        cout << "Sala: " << i <<  endl;
         for (int j = 0; j < 5; j++){
-        cout << "Dia: " << semana[j] << endl;
-            for (int k = 0; k < 14; k++)
-                if (this->schedule[i][j][k] != "")
-                cout << "   > Horario:" << (k+7) << "-" << (k+8) << "h  - " << this->schedule[i][j][k] << endl; 
+            cout << "Dia: " << semana[j] << endl;
+            int start = -1;
+                for (int k = 0; k < 14; k++) {
+                    if (this->schedule[i][j][k] != "") {
+                        if (k == 0) 
+                            start = 0;
+                        else if (this->schedule[i][j][k] != this->schedule[i][j][k - 1])
+                            start = k;
+                        if (k == 13)
+                            cout << "\t> " << (start + 7) << "h ~ " << (13 + 7) << "h: " << this->schedule[i][j][k] << endl;
+                        else if (this->schedule[i][j][k] != this->schedule[i][j][k + 1])
+                            cout << "\t> " << (start + 7) << "h ~ " << (k + 7) << "h: " << this->schedule[i][j][k] << endl;                        
+                    }
+                }
         }
         if (i < this->room_count - 1)
             cout  << endl;
