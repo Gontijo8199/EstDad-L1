@@ -4,8 +4,6 @@
 #include <iostream>
 using namespace std;
 
-
-
 ReservationSystem::ReservationSystem(int room_count, int* room_capacities){
     this->room_count = room_count;
     this->room_capacities = new int[room_count]; // evitar o caso em que o array original sai de escopo
@@ -13,15 +11,18 @@ ReservationSystem::ReservationSystem(int room_count, int* room_capacities){
         this->room_capacities[i] = room_capacities[i];
     }
 
-    // buscaremos algo como [sala][dia][horario] = "nome_do_curso" 
-    // acredito que esse armazenamento é melhor do que os outros q pensei sem stl
-    // porque eu itero n (room_cout), depois 5 fixo (dias da semana), 14 fixo (horarios possivéis), 
-    // e depois faço uma operação (leitura ou escrita), isso custa então 21n, o que é O(n), em big O
-    // o uso de this é pra deixar bem explicito
+    // Para armazenar o status das salas em cada horário sem usar estruturas do stl,
+    // definimos uma estrutura com [sala][dia][horário] = "disciplina" de modo a 
+    // associar cada sala a 5 dias da semana e cada dia aos 14 horários de reserva.
+    // Assim, para cada sala, podemos podemos avaliar seu status de reserva em cada 
+    // horário em tempo constante, e avaliar o status de todas as salas na ordem 
+    // assintótica de O(n).  
 
-    this->schedule = new std::string**[this->room_count]; // é bem esquisito a implementação da matrx3d
+    // TODO: implementar uma classe para sala, e implementar uma lista de salas aqui
+
+    this->schedule = new string**[this->room_count]; // 1 array de array de string p/ cada sala
     for (int i=0; i< this->room_count; i++){
-        this->schedule[i] = new string*[5]; // seg,ter,qua,qui,sex
+        this->schedule[i] = new string*[5]; // seg, ter, qua, qui, sex
         for (int j=0; j<5; j++){
             this->schedule[i][j] = new string[14]; // temos 7-8,8-9,9-10, etc.... #[7,21] = 14
             for (int k = 0; k<14; k++){

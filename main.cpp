@@ -33,6 +33,11 @@ int main(){
     result = r.reserve(request);
     cout << "reserva 12h às 12h: " << (result ? "sucesso" : "falha") << endl;
     
+    // Caso de reserva para número muito alto de alunos
+    request = ReservationRequest("Cálculo", "quinta", 9, 10, 10000);
+    result = r.reserve(request);
+    cout << "reserva para alunos demais: " << (result ? "sucesso" : "falha") << endl;
+
     // Caso de reserva válida para sala de 45 vagas
     request = ReservationRequest("Cálculo", "quinta", 7, 10, 40);
     result = r.reserve(request);
