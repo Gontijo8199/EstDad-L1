@@ -44,37 +44,48 @@ const string semana[] = {"segunda", "terca", "quarta", "quinta", "sexta"};
 
 bool ReservationSystem::reserve(ReservationRequest request){
 
+    int start = request.getStartHour() - 7;
+    int end = request.getEndHour() - 7;
 
-    if (request.getStartHour() < 7 || request.getEndHour() > 21)
+    if (start < 0 || end > 14)
         return false;
     
-    int k = request.getStartHour() - 7;
-    
-    
-    int j = -1;
+    int dia = -1;
     for (int idx=0; idx<5; idx++){
         if (request.getWeekday() == semana[idx]){
-            j=idx;
+            dia=idx;
             break;
         }
     }
 
-    
-    int i = -1;
+    int sala = -1;
     for (int idx = 0; idx < this->room_count; idx++){
         if (request.getStudentCount() < this->room_capacities[idx]){
-            i=idx;
-            break;
+            bool valido = true;
+            for (int hr = start; hr < end; hr++) { 
+                // validando requests que incluem mais de um bloco de horário. ex: 7-9 ou 9-12
+                // verifica se a sala está livre em cada bloco de horário solicitado
+                if (this->schedule[idx][dia][hr] != "") {
+                    valido = false;
+                    break;
+                }
+            }
+            if (valido) {
+                sala=idx;
+                break;
+            }
         }
     }   
 
-    if (j == -1 || i == -1)
+    if (dia == -1 || sala == -1) // caso algum boloco no meio esteja ocupado, sala será -1
         return false;
 
-    if (this->schedule[i][j][k] != "")
-        return false;
+    // if (this->schedule[sala][dia][start] != "") // não é mais necessário pois se confere no loop anterior
+    //     return false;
 
-    this->schedule[i][j][k] = request.getCourseName();
+    for (int hr = start; hr < end; hr++) { // 
+        this->schedule[sala][dia][hr] = request.getCourseName();
+    }
 
     return true;
 }
