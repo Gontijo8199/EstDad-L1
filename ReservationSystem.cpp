@@ -47,6 +47,10 @@ bool ReservationSystem::reserve(ReservationRequest request){
     int start = request.getStartHour() - 7;
     int end = request.getEndHour() - 7;
 
+    if (end <= start) { // não faz sentido uma reserva começar depois ou na hora que acaba
+        return false;
+    }
+
     if (start < 0 || end > 14)
         return false;
     
@@ -101,7 +105,6 @@ bool ReservationSystem::cancel(string course_name){
                 }
     
     return canceled;
-
 }
 
 void ReservationSystem::printSchedule(){
