@@ -5,21 +5,19 @@
 #include <iostream>
 using namespace std;
 
+class Sala {
+public:
+    int vagas;
+    string ocupacao[5][14];
 
-struct Sala {
-    bool disponivel;
-    int capacidade;
+    Sala(int vagas);
 };
 
 class ReservationSystem {
-
 private:
     int room_count;
-    int* room_capacities;
-    // buscaremos algo como [sala][dia][horario] = "nome_do_curso" 
 
-    string*** schedule;
-
+    Sala** salas;
 
 public:
 
