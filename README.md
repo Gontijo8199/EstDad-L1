@@ -21,13 +21,15 @@ As reservas são feitas considerando:
 
 Instrução de compilação:
 ```cpp
-g++ main.cpp ReservationSystem.cpp Reservatg++ main.cpp ReservationSystem.cpp ReservationRequest.cpp -o Reservation_main_test.out -std=c++23 -Wall -Wextra -Wconversion -Wpedantic -O2
+    g++ main.cpp ReservationSystem.cpp ReservationRequest.cpp 
+    -o reservation_system
+    -std=c++23 -Wall -Wextra -Wconversion -Wpedantic -O2
 
 ``` 
 Instrução de execução: 
 
 ```cpp
-./Reservation_main_test.out
+./reservation_system
 ``` 
 
 ---
