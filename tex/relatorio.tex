@@ -39,6 +39,12 @@ O sistema permite as seguintes operações fundamentais:
     \item \textbf{Visualização:} Exibição da grade de horários completa de cada sala.
 \end{itemize}
 
+Comando de compilação:
+\begin{verbatim}
+    g++ main.cpp ReservationSystem.cpp ReservationRequest.cpp 
+    -o Reservation_main_test.out 
+    -std=c++23 -Wall -Wextra -Wconversion -Wpedantic -O2
+\end{verbatim}
 \section*{Organização do Sistema}
 O projeto foi modularizado em classes para garantir a separação de responsabilidades e facilitar a manutenção:
 

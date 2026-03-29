@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1774813484.75846 "/home/rafa/programacao/terceiro_periodo/ED/listas/EstDad-L1/tex/relatorio.tex" "relatorio.pdf" "relatorio" 1774813485.46281 0
-  "/home/rafa/programacao/terceiro_periodo/ED/listas/EstDad-L1/tex/relatorio.tex" 1774813484.39654 3902 b91371b12f63b20146bf82c06726f603 ""
+["pdflatex"] 1774814141.15168 "/home/rafa/programacao/terceiro_periodo/ED/listas/EstDad-L1/tex/relatorio.tex" "relatorio.pdf" "relatorio" 1774814141.81021 0
+  "/home/rafa/programacao/terceiro_periodo/ED/listas/EstDad-L1/tex/relatorio.tex" 1774814140.79375 4113 8198dbbccbf1ce660b0e24f26efe6846 ""
   "/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1772820570 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1772820570 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texmf-dist/fonts/map/fontname/texfonts.map" 1772820570 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -101,9 +101,9 @@
   "/usr/share/texmf-dist/web2c/texmf.cnf" 1772820570 43569 fd570f2fa160877d211e859f687312ba ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1773178723 5385779 47c0c393a77fd4a098bacfd57d66b88a ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1773178635 2329403 71b6d4cf4c82018fb770708498d9f075 ""
-  "relatorio.aux" 1774813485.38954 303 1ff085d02e90f0cb281e39c1420292a5 "pdflatex"
-  "relatorio.out" 1774813485.28555 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "relatorio.tex" 1774813484.39654 3902 b91371b12f63b20146bf82c06726f603 ""
+  "relatorio.aux" 1774814141.72975 303 1ff085d02e90f0cb281e39c1420292a5 "pdflatex"
+  "relatorio.out" 1774814141.57813 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "relatorio.tex" 1774814140.79375 4113 8198dbbccbf1ce660b0e24f26efe6846 ""
   (generated)
   "relatorio.aux"
   "relatorio.log"
