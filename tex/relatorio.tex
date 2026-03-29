@@ -29,6 +29,7 @@
     
     \vspace{0.8cm}
 \end{center}
+
 \section*{Descrição do Projeto}
 Este projeto apresenta a implementação de um sistema de reserva de salas, desenvolvido como parte da primeira atividade de Estrutura de Dados. O objetivo central é gerenciar a ocupação acadêmica de forma eficiente, respeitando restrições de horários e capacidade física.
 
@@ -38,36 +39,43 @@ O sistema permite as seguintes operações fundamentais:
     \item \textbf{Cancelamento:} Remoção de reservas existentes no sistema.
     \item \textbf{Visualização:} Exibição da grade de horários completa de cada sala.
 \end{itemize}
-
-Comando de compilação:
+Instrução de compilação:
 \begin{verbatim}
     g++ main.cpp ReservationSystem.cpp ReservationRequest.cpp 
     -o Reservation_main_test.out 
     -std=c++23 -Wall -Wextra -Wconversion -Wpedantic -O2
 \end{verbatim}
+Instrução de execução:
+\begin{verbatim}
+    ./Reservation_main_test.out
+\end{verbatim}
 \section*{Organização do Sistema}
 O projeto foi modularizado em classes para garantir a separação de responsabilidades e facilitar a manutenção:
-
 \begin{itemize}
     \item \texttt{main.cpp}: Ponto de entrada que executa os testes automatizados e demonstra as funcionalidades.
-    \item \texttt{ReservationRequest}: Define a estrutura da solicitação de reserva (Arquivos \texttt{.cpp} e \texttt{.hpp}).
-    \item \texttt{ReservationSystem}: Núcleo do sistema, responsável pelo gerenciamento dos dados e lógica de reserva (Arquivos \texttt{.cpp} e \texttt{.hpp}).
+    \item \texttt{ReservationRequest}: Define a estrutura da solicitação de reserva.
+    \item \texttt{ReservationSystem}: Núcleo do sistema, responsável pelo gerenciamento dos dados e lógica.
 \end{itemize}
 
-\section*{Estruturas de Dados e Implementação}
-Para cumprir os requisitos de não utilizar estruturas da \textit{Standard Template Library} (STL), o sistema baseia-se em alocação dinâmica de memória:
+\section*{Estruturas de Dados: Escolhas, Alternativas e Trade-offs}
+Para cumprir os requisitos de não utilizar a \textit{Standard Template Library} (STL), o sistema foi construído sobre matrizes e alocação dinâmica de memória:
 
 \begin{enumerate}
-    \item \textbf{Matriz de Disponibilidade:} Cada sala armazena uma matriz bidimensional estática $[dia][horario]$ (5 dias x 14 horários). Isso permite que a verificação de disponibilidade em um slot específico seja realizada em tempo constante $O(1)$.
-    \item \textbf{Alocação Dinâmica:} As salas são organizadas em um array alocado dinamicamente. A busca por uma sala disponível para uma solicitação específica possui complexidade assintótica $O(n)$, onde $n$ é o número de salas.
-    \item \textbf{Melhor Ajuste:} O sistema busca a sala com a menor capacidade que comporte o número de alunos da disciplina. Essa estratégia otimiza o uso do espaço, preservando salas maiores para demandas que realmente necessitem de tal capacidade.
+    \item \textbf{Matriz de Disponibilidade (Implementada):} Cada sala armazena uma matriz bidimensional estática de strings para $5$ dias e $14$ horários. \textbf{Por quê?} Essa estrutura permite acesso e verificação de um slot em tempo $O(1)$. 
+    \item \textbf{Array Dinâmico de Salas (Implementado):} As salas são instanciadas dinamicamente e ordenadas no construtor por capacidade. Isso permite uma política de "Melhor Ajuste" ao iterar sequencialmente, alocando a menor sala viável para a disciplina.
+    \item \textbf{Lista Encadeada (Alternativa Considerada):} Foi cogitado o uso de listas encadeadas para armazenar apenas as reservas ativas, substituindo a matriz densa por uma estrutura esparsa.
 \end{enumerate}
 
-\section*{Análise Crítica}
-A implementação atual prioriza a velocidade de acesso e a simplicidade de implementação. Contudo, observa-se um custo de memória fixo, dado que cada sala reserva espaço para todos os horários possíveis, independentemente de estarem ocupados ou não.
+\textbf{Trade-offs:} A matriz estática escolhida favorece a \textbf{velocidade e simplicidade} de implementação (acesso $O(1)$ a qualquer horário), mas possui o revés do \textbf{desperdício de memória}, já que todos os slots (mesmo vazios) são previamente alocados. Por outro lado, a alternativa da lista encadeada economizaria memória em ambientes com poucas reservas, mas sofreria um \textit{trade-off} de performance, degradando a busca para $O(K)$ (onde $K$ é o número de reservas na sala), além de aumentar o risco de vazamento de memória devido à manipulação complexa de ponteiros.
 
-Em cenários de alta escalabilidade (milhares de salas e horários), essa abordagem pode se tornar ineficiente. Uma solução proposta para versões futuras é a utilização de listas encadeadas para armazenar apenas as reservas ativas, substituindo a matriz densa por uma estrutura esparsa, otimizando assim o consumo de memória.
+\section*{Custo Computacional}
+Considerando $S$ como o número de salas, $D = 5$ (dias da semana) e $H = 14$ (horários diários):
 
-
+\begin{itemize}
+    \item \textbf{Verificação de conflito:} $O(H_{reserva})$. Está embutida na função de reserva. Para uma sala específica, checar se os blocos estão vazios exige iterar apenas pela duração solicitada na reserva (máximo de 14 iterações).
+    \item \textbf{Reserva:} $O(S \times H_{reserva})$. O sistema varre o array de salas (previamente ordenado). No pior cenário, itera sobre todas as $S$ salas, avaliando a disponibilidade dos horários $H$ solicitados até encontrar uma vaga ou falhar, a complexidade assintótica reduz-se a $O(S)$.
+    \item \textbf{Cancelamento:} $O(S \times D \times H)$. Como a solicitação de cancelamento recebe apenas o nome da disciplina, o algoritmo varre toda a matriz de ocupação de todas as salas para zerar as ocorrências. Sendo $D$ e $H$ constantes (70 slots), a complexidade assintótica reduz-se a $O(S)$.
+    \item \textbf{Exibição da grade:} $O(S \times D \times H)$. Para imprimir a grade e agrupar horários contíguos (ex: 7h \textasciitilde 10h), o sistema iterativamente lê e compara todos os slots de memória do sistema. Da mesma forma, reduz-se assintoticamente a $O(S)$.
+\end{itemize}
 
 \end{document}

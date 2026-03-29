@@ -19,10 +19,17 @@ As reservas são feitas considerando:
 - intervalo de horário
 - número de alunos da disciplina
 
-Comando de compilação:
+Instrução de compilação:
 ```cpp
 g++ main.cpp ReservationSystem.cpp Reservatg++ main.cpp ReservationSystem.cpp ReservationRequest.cpp -o Reservation_main_test.out -std=c++23 -Wall -Wextra -Wconversion -Wpedantic -O2
+
 ``` 
+Instrução de execução: 
+
+```cpp
+./Reservation_main_test.out
+``` 
+
 ---
 
 ## Organização do Projeto
