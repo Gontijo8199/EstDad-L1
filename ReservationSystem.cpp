@@ -14,21 +14,27 @@ Sala::Sala(int vagas) {
 
 ReservationSystem::ReservationSystem(int room_count, int* room_capacities){
     this->room_count = room_count;
+    int *room_capacities_ordenado = new int[room_count];
+    
+    for (int i=0; i<room_count; i++)
+        room_capacities_ordenado[i] = room_capacities[i];
 
     // ordenando as salas na ordem crescente de vagas para que, ao reservar uma sala, 
     // seja alocada aqula com a menor capacidade que suporta a reserva
     for (int i=0; i<room_count; i++)
         for (int j=0; j<room_count-i-1; j++) // < r_c -i -1 pois ja tem i ordenados no final
-            if (room_capacities[j] > room_capacities[j+1]) {
-                int temp = room_capacities[j];
-                room_capacities[j] = room_capacities[j+1];
-                room_capacities[j+1] = temp;
+            if (room_capacities_ordenado[j] > room_capacities_ordenado[j+1]) {
+                int temp = room_capacities_ordenado[j];
+                room_capacities_ordenado[j] = room_capacities_ordenado[j+1];
+                room_capacities_ordenado[j+1] = temp;
             } 
 
     // array de ponteiros pois a sala sempre tem que possuir sua capacidade na inicialização
     this->salas = new Sala*[room_count]; 
     for (int i = 0; i < room_count; i++) 
-        this->salas[i] = new Sala(room_capacities[i]);
+        this->salas[i] = new Sala(room_capacities_ordenado[i]);
+
+    delete[] room_capacities_ordenado;
 }
 
 ReservationSystem::~ReservationSystem(){
